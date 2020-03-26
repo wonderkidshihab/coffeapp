@@ -3,22 +3,21 @@ import 'package:firebasepractise/models/user.dart';
 import 'package:firebasepractise/services/auth.dart';
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   AuthService _authService = AuthService();
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
   String error = '';
   bool load = false;
-
   @override
   Widget build(BuildContext context) {
-    return (load) ? Loading(): Center(
+    return (load) ? Loading() : Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Container(
@@ -38,7 +37,7 @@ class _SignInState extends State<SignIn> {
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
                     child: TextFormField(
                       validator: (val) =>
-                          val.isEmpty ? "Email can not be empty" : null,
+                      val.isEmpty ? "Email can not be empty" : null,
                       onChanged: (val) {
                         setState(() {
                           email = val;
@@ -62,10 +61,10 @@ class _SignInState extends State<SignIn> {
                     color: Colors.white.withOpacity(0.6),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                    padding: const EdgeInsets.symmetric(horizontal:15.0),
                     child: TextFormField(
                       validator: (val) =>
-                          val.length < 6 ? "Password is weak" : null,
+                      val.length < 6 ? "Password is weak" : null,
                       onChanged: (val) {
                         setState(() {
                           password = val;
@@ -90,20 +89,20 @@ class _SignInState extends State<SignIn> {
                       setState(() {
                         load = true;
                       });
-                      dynamic user = await _authService.SignInEmailPass(
+                      dynamic user = await _authService.RegisterEmailPass(
                         email: email,
                         password: password,
                       );
                       if(user == null){
                         setState(() {
-                          error = "Wrong Email or Password";
+                          error = "Error Sign Up";
                           load = false;
                         });
                       }
                     }
                   },
                   child: Text(
-                    "Sign In",
+                    "Sign Up",
                     style: TextStyle(color: Colors.white),
                   ),
                   color: Colors.red[400],
